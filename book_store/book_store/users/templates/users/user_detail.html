@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+
+        <div class="username">
+            <img style="margin-bottom:15px;" src="{{ user.profile.image.url }}" alt="User Photo">
+            <h4>
+                <strong>{{ user.username }}</strong>
+            </h4>
+            <a href="{% url 'UserUpdate' %}"><button class="btn btn-success profile_buttons">Edit my profile
+                    <i class="fas fa-user-edit"></i></button></a>
+            <a href="{% url 'ProfileUpdate' %}"><button class="btn btn-success profile_buttons">Edit your photo
+                    <i class="fas fa-camera-retro"></i></button></a>
+
+        </div>
+        <div class="profile_info">
+
+            <p><strong>Join date</strong> <br>{{ user.date_joined|date:"F j, Y" }}</p>
+            <p><strong>Last login date </strong><br>{{ user.last_login|date:"F j, Y" }}</p>
+            <p><strong>Email </strong><br>{{ user.email }}</p>
+        </div>
+
+    </div>
+
+    <div class="col-md-9">
+        <h2>Twoje wypożyczone książki:</h2>
+        <table style="width:100%" id="books">
+            <tr>
+                <th>Tytuł</th>
+                <th>Data wypożyczenia</th>
+                <th>Data zwrotu</th>
+                <th>Ile dni</th>
+                <th>Akcja</th>
+            </tr>
+            {% for book in user.books.all %}
+            <tr>
+                <td>{{ book.book.title }}</td>
+                <td>{{ book.rent_date|date:"d-m-Y" }}</td>
+                <td>{{ book.back_date|date:"d-m-Y" }}</td>
+                <td>{{ book.how_many_days }}</td>
+                <td><a href="{% url 'return_book' slug=book.book.slug %}">Zwróć</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+</div>
+{% endblock content %}

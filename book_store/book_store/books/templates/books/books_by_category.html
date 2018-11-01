@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Ksiązki w kategori {{ book_list.first.category }}</h2>
+<div class="row lastBooksContainer">
+    {% for book in book_list %}
+    <div class="col-md-4 bookCard">
+        <div class="cardBorder">
+            <img class="book_image" src="{{ book.image.url }}" alt="Book image">
+            <h5>{{ book.title }}</h5>
+            <h6>{{ book.author }}</h6>
+            {% if book.actual_rating %}
+            {% for rate in book.actual_rating %}
+            <span class="fa fa-star checked"></span>
+            {% endfor %} <br>
+            {% else %}
+            <h6>Brak ocen</h6>
+            {% endif %}
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

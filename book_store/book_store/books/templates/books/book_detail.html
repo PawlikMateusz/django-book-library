@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4 bookDetailLeftSide">
+        <img class="bookImage" src="{{ book.image.url }}" alt=""> <br>
+        {% if book.actual_rating %}
+        {% for rate in book.actual_rating %}
+        <span class="fa fa-star checked"></span>
+        {% endfor %}
+        <br>
+        Liczba ocen({{ book.reviews.count }})<br>
+        {% else %}
+        <br>
+        <h6>Brak ocen</h6>
+        {% endif %}
+        Oceń:
+        <a href="{% url 'rate_book' slug=book.slug rating=1 %}">1</a>
+        <a href="{% url 'rate_book' slug=book.slug rating=2 %}">2</a>
+        <a href="{% url 'rate_book' slug=book.slug rating=3 %}">3</a>
+        <a href="{% url 'rate_book' slug=book.slug rating=4 %}">4</a>
+        <a href="{% url 'rate_book' slug=book.slug rating=5 %}">5</a> <br>
+        <a href="#commentBox">Liczba komentarzy ({{ book.comments.count }})</a>
+        {% if book.book_amount > 0 %}
+        <h5><strong>Ilość dostępnych:</strong> {{ book.book_amount }}</h5>
+        {% if user.is_authenticated %}
+        <a href="{% url 'confirm_rent_view' slug=book.slug %}"><button class="btn btn-primary btn-xs">Wypożycz</button></a>
+        {% else %}
+        <a href="{% url 'confirm_rent_view' slug=book.slug %}"><button class="btn btn-primary btn-xs">Zaloguj się aby
+                wypożyczyć</button></a>
+        {% endif %}
+        {% else %}
+        <h5><strong>Ilość dostępnych: </strong>brak</h5>
+        {% endif %} <br>
+    </div>
+    <div class="col-md-8">
+        <h5><strong>{{ book.title }}</strong> </h5>
+        <h5><strong>Autor:</strong> {{ book.author }}</h5>
+        <h5><strong>Kategoria:</strong> {{ book.category }}</h5>
+        <h6><strong>Opis:</strong> </h6>
+        <p> {{ book.description }}</p>
+        <hr class="my-4">
+        <div id="commentBox">
+            {% if user.is_authenticated %}
+            <form method="post" class="formsWidth">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success">Dodaj komentarz</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login_to_comment_redirect' slug=book.slug %}"><button class="btn btn-primary btn-xs">Dodaj
+                    komentarz (logowanie)</button></a>
+            {% endif %}
+
+            {% if comments %}
+            <br> <br>
+            <h6>Komentarze({{ book.comments.count }}):</h6>
+            {% for comment in comments %}
+            <div>
+                <h6><strong>{{ comment.user.username }}</strong></h6>
+                <h6 class="comment_text">{{ comment.text }}</h6>
+            </div>
+            <hr class="my-4">
+            {% endfor %}
+            {% else %}
+            <h6>Brak komentarzy</h6>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock content %}

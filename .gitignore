@@ -1,0 +1,9 @@
+book_store/book_store/books/__pycache__
+.vscode
+book_store/book_store/book_store/__pycache__
+book_store/book_store/books/migrations
+book_store/book_store/media/books_pics
+book_store/venv
+book_store/book_store/users/migrations
+book_store/book_store/users/__pycache__
+book_store/book_store/media/profile_pics

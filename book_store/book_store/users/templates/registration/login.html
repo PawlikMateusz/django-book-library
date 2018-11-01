@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h3>Login to Django Blog</h3>
+<form method="post" class="formsWidth">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Login</button>
+</form>
+Nie masz konta? <a href="{% url 'signup' %}">Zarejstruj się</a> <br>
+Forgot your password? <a href="{% url 'resetPassword' %}">Reset password</a>
+{% endblock content %}

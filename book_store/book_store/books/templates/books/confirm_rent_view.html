@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>Czy na pewno chcesz wypozyczyć książkę? </h3>
+<h3>Are you sure tha you want to rent this book? </h3>
 <img src="{{ book.image.url }}" class="bookImage" alt="">
-<h5><strong>Tytuł:</strong> {{ book.title }}</h5>
-<h5><strong>Autor:</strong> {{ book.author }}</h5>
-<a href="{% url 'rent_book' slug=book.slug %}"><button class="btn btn-success btn-xs">Wypożycz</button></a>
-<a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-info btn-xs">Wróć</button></a>
+<h5><strong>Title:</strong> {{ book.title }}</h5>
+<h5><strong>Author:</strong> {{ book.author }}</h5>
+<a href="{% url 'rent_book' slug=book.slug %}"><button class="btn btn-success btn-xs">Rent book</button></a>
+<a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-info btn-xs">Return</button></a>
 {% endblock content %}

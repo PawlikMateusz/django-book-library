@@ -1,7 +1,20 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import login_to_comment_redirect, contact_form, HomeListView, rate_book_view, BooksListView, SearchBookListView, CategoryBookListView, BookDetailView, return_book_view, confirm_rent_view, rent_book_view
+
+from .views import (
+    BookDetailView,
+    BooksListView,
+    CategoryBookListView,
+    confirm_rent_view,
+    contact_form,
+    HomeListView,
+    login_to_comment_redirect,
+    rate_book_view,
+    return_book_view,
+    rent_book_view,
+    SearchBookListView,
+)
 
 
 urlpatterns = [

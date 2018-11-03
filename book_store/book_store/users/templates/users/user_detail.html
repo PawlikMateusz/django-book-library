@@ -24,14 +24,14 @@
     </div>
 
     <div class="col-md-9">
-        <h2>Twoje wypożyczone książki:</h2>
+        <h2>Your rented books:</h2>
         <table style="width:100%" id="books">
             <tr>
-                <th>Tytuł</th>
-                <th>Data wypożyczenia</th>
-                <th>Data zwrotu</th>
-                <th>Ile dni</th>
-                <th>Akcja</th>
+                <th>Title</th>
+                <th>Rent date</th>
+                <th>Data of return</th>
+                <th>Days</th>
+                <th>Action</th>
             </tr>
             {% for book in user.books.all %}
             <tr>
@@ -39,7 +39,7 @@
                 <td>{{ book.rent_date|date:"d-m-Y" }}</td>
                 <td>{{ book.back_date|date:"d-m-Y" }}</td>
                 <td>{{ book.how_many_days }}</td>
-                <td><a href="{% url 'return_book' slug=book.book.slug %}">Zwróć</a>
+                <td><a href="{% url 'return_book' slug=book.book.slug %}">Return</a>
                 </td>
             </tr>
             {% endfor %}

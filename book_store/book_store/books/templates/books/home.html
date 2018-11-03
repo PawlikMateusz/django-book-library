@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4">Witaj na stronie mojej księgarni!</h1>
-    <p class="lead">Zaloguj się żeby wypożyczać i oceniać książki</p>
+    <h1 class="display-4">Welcome on my site!</h1>
+    <p class="lead">Create account and login to review, rent and rate books!</p>
     <hr class="my-4">
     <p>
-        <h5>Wyszukaj książkę</h5>
+        <h5>Search book</h5>
         <form class="searchForm" action="{% url 'search' %}" method=" GET">
             <div class="form-group row">
-                <input class="form-control col-md-7" required="required" name="q" type="text" placeholder="Wpisz tytuł lub autora">
+                <input class="form-control col-md-7" required="required" name="q" type="text" placeholder="Write title or author">
                 <span class="col-md-1"></span>
-                <button type="submit" class="btn btn-primary form-control col-md-2">Wyszukaj</button>
+                <button type="submit" class="btn btn-primary form-control col-md-2">Search</button>
             </div>
         </form>
 
     </p>
 </div>
 <hr class="my-4">
-<h2>Ostatnio dodane książki:</h2>
+<h2>Recenlty added books:</h2>
 <div class="row lastBooksContainer">
     {% for book in book_list %}
     <div class="col-md-4 bookCard">
@@ -30,10 +30,10 @@
             <span class="fa fa-star checked"></span>
             {% endfor %} <br>
             {% else %}
-            <h6>Brak ocen</h6>
+            <h6>Nobody rated</h6>
             {% endif %}
 
-            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Book detail</button></a>
         </div>
     </div>
     {% endfor %}

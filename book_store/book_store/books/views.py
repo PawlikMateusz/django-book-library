@@ -5,10 +5,25 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Count
-from .forms import ContactForm, CommentForm
-from django.views.generic import FormView, ListView, TemplateView, DetailView, UpdateView
 from django.views.generic.edit import FormMixin
-from .models import BookComment, InBoxMessages, Book, Category, BookRentHistory, BookReview
+from django.views.generic import (
+    DetailView,
+    FormView,
+    ListView,
+    TemplateView,
+    UpdateView)
+
+from .forms import (
+    ContactForm,
+    CommentForm)
+from .models import (
+    Book,
+    BookComment,
+    BookRentHistory,
+    BookReview,
+    Category,
+    InBoxMessages,
+)
 # Create your views here.
 
 
@@ -80,11 +95,8 @@ class BookDetailView(FormMixin, DetailView):
         b = self.get_object()
         text = form.cleaned_data['text']
         new_comment = BookComment(text=text, book=b, user=self.request.user)
-        # new_comment.text = text
-        # new_comment.book = b
-        # new_comment.user = self.request.user
         new_comment.save()
-        messages.success(self.request, "Twój komenatarz został dodany")
+        messages.success(self.request, "Your comment is added, thank you")
         return super().form_valid(form)
 
 
@@ -99,10 +111,10 @@ def confirm_rent_view(request, slug):
         b = Book.objects.get(slug=slug)
         if b.book_amount <= 0:
             messages.warning(
-                request, f'Nie można wypożyczyć tej książki')
+                request, f'You cant rent this book')
             return redirect('bookDetail', slug=b.slug)
     except Book.DoesNotExist:
-        raise Http404("Książka nie istnieje")
+        raise Http404("We ont have this book")
     return render(request, 'books/confirm_rent_view.html', {'book': b})
 
 
@@ -117,13 +129,13 @@ def rent_book_view(request, slug):
                 log_history = BookRentHistory(user=request.user, book=b)
                 log_history.save()
                 messages.success(
-                    request, f'Wypożyczono książkę: {b.title}')
+                    request, f'You rent a book: {b.title}')
             else:
                 messages.warning(
-                    request, f'Nie można wypożyczyć tej książki')
+                    request, f'You cant rent this book')
                 return redirect('bookDetail', slug=b.slug)
     except Book.DoesNotExist:
-        raise Http404("Książka jest obecnie niedostępna")
+        raise Http404("Book is unavailable")
     return redirect('UserProfile')
 
 
@@ -137,13 +149,13 @@ def return_book_view(request, slug):
             log_history = BookRentHistory.objects.filter(book=b)[0]
             log_history.delete()
             messages.success(
-                request, f'Pomyślnie zrwócono książkę: {b.title}')
+                request, f'You successfully returned a book: {b.title}')
         else:
             messages.warning(
-                request, f'Wystapił błąd, przepraszamy')
+                request, f'Error occurs, sorry')
             return redirect('UserProfile')
     except Book.DoesNotExist:
-        raise Http404("Książka jest obecnie niedostępna")
+        raise Http404("Book is unavailable now ")
     return redirect('UserProfile')
 
 
@@ -166,14 +178,14 @@ def rate_book_view(request, slug, rating):
             b.last_rating = b.calc_rating
             b.save()
             messages.success(
-                request, f'Oceniłeś książkę: {b.title}')
+                request, f'You rated a book: {b.title}')
 
         else:
             messages.warning(
-                request, f'Już oceniłeś tą książkę')
+                request, f'You already rated this book')
         return redirect('bookDetail', slug=b.slug)
     except Book.DoesNotExist:
-        raise Http404("Książka jest obecnie niedostępna")
+        raise Http404("Book is unavailable")
     return redirect('bookDetail', slug=b.slug)
 
 
@@ -189,16 +201,20 @@ def contact_form(request):
             new_message.email = email
             new_message.message = message
             new_message.save()
-            messages.success(request, "Twoja wiadomość została wysłana")
+            messages.success(request, "Your message is sent")
             return redirect('home')
     if request.user.is_authenticated:
-        form = ContactForm(
-            {'name': request.user.username, 'email': request.user.email,
-                'message': 'Twoja wiadomość'})
+        form = ContactForm()
+        form.fields['name'].initial = request.user.username
+        form.fields['email'].initial = request.user.email
+        form.fields['message'].widget.attrs['placeholder'] = 'Write your message here'
         form.fields['name'].label = 'Login'
         form.fields['name'].widget.attrs['readonly'] = True
         form.fields['email'].widget.attrs['readonly'] = True
         return render(request, 'books/contact.html', {'form': form})
     else:
         form = ContactForm()
+        form.fields['name'].widget.attrs['placeholder'] = 'Your name'
+        form.fields['email'].widget.attrs['placeholder'] = 'Your email'
+        form.fields['message'].widget.attrs['placeholder'] = 'Write your message here'
         return render(request, 'books/contact.html', {'form': form})

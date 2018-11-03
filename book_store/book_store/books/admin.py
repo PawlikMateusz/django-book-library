@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Book, Category, BookRentHistory, InBoxMessages
+
+from .models import (
+    Book,
+    BookRentHistory,
+    Category,
+    InBoxMessages)
 # Register your models here.
 
 

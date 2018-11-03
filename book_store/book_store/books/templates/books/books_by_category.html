@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Ksiązki w kategori {{ book_list.first.category }}</h2>
+<h2>Books in category:{{ book_list.first.category }}</h2>
 <div class="row lastBooksContainer">
     {% for book in book_list %}
     <div class="col-md-4 bookCard">
@@ -13,9 +13,9 @@
             <span class="fa fa-star checked"></span>
             {% endfor %} <br>
             {% else %}
-            <h6>Brak ocen</h6>
+            <h6>Nobody rated</h6>
             {% endif %}
-            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Book details</button></a>
         </div>
     </div>
     {% endfor %}

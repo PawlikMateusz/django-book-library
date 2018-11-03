@@ -7,6 +7,6 @@
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Login</button>
 </form>
-Nie masz konta? <a href="{% url 'signup' %}">Zarejstruj się</a> <br>
+Create new user account: <a href="{% url 'signup' %}">Register here</a> <br>
 Forgot your password? <a href="{% url 'resetPassword' %}">Reset password</a>
 {% endblock content %}

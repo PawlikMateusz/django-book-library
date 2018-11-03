@@ -7,3 +7,8 @@ book_store/venv
 book_store/book_store/users/migrations
 book_store/book_store/users/__pycache__
 book_store/book_store/media/profile_pics
+book_store/book_store/htmlcov
+book_store/book_store/.coverage
+book_store/book_store.zip
+book_store/env.bat
+book_store/run.bat

@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <p>
-    <h5>Wyszukaj książkę</h5>
+    <h5>Search book</h5>
     <form class="searchForm" action="{% url 'search' %}" method=" GET">
         <div class="form-group row">
-            <input class="form-control col-md-7" required="required" name="q" type="text" placeholder="Wpisz tytuł lub autora">
+            <input class="form-control col-md-7" required="required" name="q" type="text" placeholder="Write title or author">
             <span class="col-md-1"></span>
-            <button type="submit" class="btn btn-primary form-control col-md-2">Wyszukaj</button>
+            <button type="submit" class="btn btn-primary form-control col-md-2">Search</button>
         </div>
     </form>
 </p>
 <hr class="my-4">
-<h3>Najwyżej oceniane książki:</h3>
+<h3>Best rated books:</h3>
 <div class="row lastBooksContainer">
     {% for book in top_3_books %}
     <div class="col-md-4 bookCard">
@@ -24,14 +24,14 @@
             <span class="fa fa-star checked"></span>
             {% endfor %} <br>
             {% else %}
-            <h6>Brak ocen</h6>
+            <h6>Nobody rated</h6>
             {% endif %}
-            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Book details</button></a>
         </div>
     </div>
     {% endfor %}
 </div>
-<h3>Najczęściej oceniane książki:</h3>
+<h3>Most review books:</h3>
 <div class="row lastBooksContainer">
     {% for book in most_reviews %}
     <div class="col-md-4 bookCard">
@@ -44,14 +44,14 @@
             <span class="fa fa-star checked"></span>
             {% endfor %} <br>
             {% else %}
-            <h6>Brak ocen</h6>
+            <h6>Nobody rated</h6>
             {% endif %}
-            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Book details</button></a>
         </div>
     </div>
     {% endfor %}
 </div>
-<h3>Najczęściej komentowane książki:</h3>
+<h3>Most comment books:</h3>
 <div class="row lastBooksContainer">
     {% for book in most_comments %}
     <div class="col-md-4 bookCard">
@@ -64,14 +64,14 @@
             <span class="fa fa-star checked"></span>
             {% endfor %} <br>
             {% else %}
-            <h6>Brak ocen</h6>
+            <h6>Nobody rated</h6>
             {% endif %}
-            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Book details</button></a>
         </div>
     </div>
     {% endfor %}
 </div>
-<h3>Ostatnio dodane książki:</h3>
+<h3>Recent added books:</h3>
 <div class="row lastBooksContainer">
     {% for book in book_list %}
     <div class="col-md-4 bookCard">
@@ -84,9 +84,9 @@
             <span class="fa fa-star checked"></span>
             {% endfor %} <br>
             {% else %}
-            <h6>Brak ocen</h6>
+            <h6>Nobody rated</h6>
             {% endif %}
-            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Szczegóły</button></a>
+            <a href="{% url 'bookDetail' slug=book.slug %}"><button class="btn btn-primary btn-xs">Book details</button></a>
         </div>
     </div>
     {% endfor %}

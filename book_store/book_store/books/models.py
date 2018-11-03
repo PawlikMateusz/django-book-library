@@ -40,19 +40,10 @@ class Book(models.Model):
 
     @property
     def actual_rating(self):
-        how_many_stars = []
+        list_of_stars = []
         for star in range(self.last_rating):
-            how_many_stars.append(star)
-        return how_many_stars
-        # ratings = BookReview.objects.filter(book=self)
-        # if ratings:
-        #     result = 0
-        #     for rating in ratings:
-        #         result += rating.rating
-        #     result = int(result / len(ratings))
-        #     return range(result)
-        # else:
-        #     return False
+            list_of_stars.append(star)
+        return list_of_stars
 
     @property
     def calc_rating(self):
@@ -64,7 +55,7 @@ class Book(models.Model):
             result = int(result / len(ratings))
             return result
         else:
-            return False
+            return 0
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

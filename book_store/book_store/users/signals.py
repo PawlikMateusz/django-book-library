@@ -1,20 +1,20 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from .models import Profile
-
 from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in, user_logged_out
+
+from .models import Profile
 
 
 def logged_in_message(sender, user, request, **kwargs):
     messages.info(
-        request, f"Witaj {request.user}, jesteś zalogowany/a. Teraz możesz dodawać komentarze, oceniań oraz wypożyczać książki :) ")
+        request, f"Welcome {request.user}, you are logged in, now you can rent, review and rate boks ")
 
 
 def logout_message(sender, user, request, **kwargs):
     messages.info(
-        request, f"Pomyślnie się wylogowałeś, do zobaczenia {request.user}")
+        request, f"You are log out, see you later {request.user}")
 
 
 user_logged_out.connect(logout_message)
